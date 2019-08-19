@@ -14,6 +14,9 @@ class UserController {
             btn.disabled = true;
             
           let values  = this.getValues();
+
+          if (!values) return false;
+
           this.getPhoto().then(
               (content) => {
 
@@ -123,6 +126,8 @@ class UserController {
       
             let tr = document.createElement('tr');
 
+            tr.dataset.user = JSON.stringify(dataUser);
+
             tr.innerHTML = `
           
                 <td><img src="${dataUser.photo}" alt="User Image" class="img-circle img-sm"></td>
@@ -137,8 +142,28 @@ class UserController {
               
                     `;
                     this.tableEl.appendChild(tr);
+                    this.updateCount();
+
+                
           
     }
+    // contador de usuarios
+    updateCount(){
+        let numberUsers = 0;
+        let numberAdmin = 0;
+        [...this.tableEl.children].forEach( tr => {
+
+            numberUsers++;
+            
+            let user = JSON.parse(tr.dataset.user);
+
+            if (user._admin) numberAdmin++; 
+
+        });
+        
+        document.querySelector("#number-users").innerHTML = numberUsers;
+        document.querySelector("#number-users-admin").innerHTML = numberAdmin;
+    }// Fim do Contador de usuarios
 
 
 }
