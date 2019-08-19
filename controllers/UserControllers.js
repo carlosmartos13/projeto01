@@ -34,7 +34,7 @@ class UserController {
             fileReader.onload = ()=>{
                 callback(fileReader.result);
             };
-        fileReader,readAsDataURL(files);
+        fileReader.readAsDataURL(file);
     }
     getValues(){
 
